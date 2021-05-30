@@ -313,9 +313,9 @@ int quickSort(int *a, int n)
 
 	return 0;
 }
-
+// 해쉬 Function 구현
 int hashCode(int key) {
-   return key % MAX_HASH_TABLE_SIZE;
+   return key % MAX_HASH_TABLE_SIZE;	// key 값이 들어오면 몇번으로 들어가는지 로직을 설정한다.
 }
 
 int hashing(int *a, int **ht)
@@ -330,7 +330,7 @@ int hashing(int *a, int **ht)
 		hashtable = *ht;	/* hash table이 NULL이 아닌경우, table 재활용, reset to -1 */
 	}
 
-	for(int i = 0; i < MAX_HASH_TABLE_SIZE; i++)
+	for(int i = 0; i < MAX_HASH_TABLE_SIZE; i++)			//해시테이블 초기화
 		hashtable[i] = -1;
 
 	/*
@@ -348,39 +348,39 @@ int hashing(int *a, int **ht)
 		/*
 		printf("key = %d, hashcode = %d, hashtable[%d]=%d\n", key, hashcode, hashcode, hashtable[hashcode]);
 		*/
-		if (hashtable[hashcode] == -1)
+		if (hashtable[hashcode] == -1)						// 해시테이블의 해시코드 위치가 -1이면 
 		{
-			hashtable[hashcode] = key;
+			hashtable[hashcode] = key;						// 해시테이블에 key을 저장
 		} else 	{
 
-			index = hashcode;
+			index = hashcode;								// 아니면 인덱스에 해시코드 저장
 
-			while(hashtable[index] != -1)
+			while(hashtable[index] != -1)					// 해시테이블이 -1이 아닐때 까지
 			{
-				index = (++index) % MAX_HASH_TABLE_SIZE;
+				index = (++index) % MAX_HASH_TABLE_SIZE;   // 충돌이 일어나면 그 다음 테이블에 삽입
 				/*
 				printf("index = %d\n", index);
 				*/
 			}
-			hashtable[index] = key;
+			hashtable[index] = key;							// 인덱스 위치에 key값을 저장
 		}
 	}
 
 	return 0;
 }
-
+/* 해시 키 탐색 */
 int search(int *ht, int key)
 {
 	int index = hashCode(key);
 
-	if(ht[index] == key)
+	if(ht[index] == key)				// 찾는 값이 인덱스의 위치에 있으면 인덱스를 반환
 		return index;
 
-	while(ht[++index] != key)
+	while(ht[++index] != key)  			// key값과 같은 인덱스를 찾는다.
 	{
-		index = index % MAX_HASH_TABLE_SIZE;
+		index = index % MAX_HASH_TABLE_SIZE;	// 인덱스를 0~MAX_HASH_TABLE_SIZE 내에서 값이 1씩 증가
 	}
-	return index;
+	return index;							
 }
 
 
